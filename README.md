@@ -16,9 +16,8 @@ It is your starting point to create wonderful apps using ING APIs!
 
 ## Software Development Kit (SDK)
 
-We are also providing an SDK for frictionless calls to Open Banking APIs.
+We are also providing an SDK for frictionless calls to Open Banking APIs.The SDK provides drivers that can be used directly in your applications to connect to ING.
 
-The SDK provides drivers that can be used directly in your applications to connect to ING.
-Find all the details [here](https://github.com/ing-bank/ing-open-banking-sdk)
+Find all the details [here](https://github.com/ing-bank/ing-open-banking-sdk).
 
 *including PSD2 APIs
