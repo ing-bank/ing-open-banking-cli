@@ -1,2 +1,3 @@
 certificates/
-config.env
+*.env
+*.sh
