@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###############################################################################
-#                             CALL PAYMENT REQUEST AND REGISTER A MERCHANT    #
+#                   CALL PAYMENT REQUEST AND REGISTER A MERCHANT              #
 ###############################################################################
 # This script calls the payment request API in ING's sandbox environment and- #
 # -submits a post request to the endpoint "payment-requests/registrations".   #
@@ -11,7 +11,7 @@
 # documentation                                                               #
 ###############################################################################
 
-outputFile=openBanking_02_CallPaymentRequestRegistrationResponse.json
+outputFile=premium_02_CallPaymentRequestRegistrationResponse.json
 
 # read from config and set variables
 # shellcheck disable=SC2154,SC1090
@@ -19,7 +19,7 @@ outputFile=openBanking_02_CallPaymentRequestRegistrationResponse.json
   rootPath="./../../"                             # path to root of the repository
   . $rootPath"apps/active.env"                    # read what environment is active
   activePath=$rootPath"apps/$active"              # store active path
-  config="$activePath/config.env"                 # config file for sandbox app
+  config="$activePath/config-premium.env"                 # config file for sandbox app
   . "$config"                                     # source config from fil
   keyId=$keyId                                    # map keyId from config
   httpHost=$baseURL                               # map host

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ###############################################################################
-#                             REQUEST APPLICATION ACCESS TOKEN               #
+#                             REQUEST APPLICATION ACCESS TOKEN                #
 ###############################################################################
-# This script requests application access token for the open banking API in-  #
+# This script requests application access token for the Premium API in-  #
 # -the ING's sandbox environment using example certificates.                  #
 ###############################################################################
 
-outputFile=openBanking_01_RequestApplicationTokenResponse.json
+outputFile=premium_01_RequestApplicationTokenResponse.json
 
 # read from config and set variables
 # shellcheck disable=SC2154,SC1090
@@ -15,7 +15,7 @@ outputFile=openBanking_01_RequestApplicationTokenResponse.json
   rootPath="./../../"                             # path to root of the repository
   . $rootPath"apps/active.env"                    # read what environment is active
   activePath=$rootPath"apps/$active"              # store active path
-  config="$activePath/config.env"                 # config file for sandbox app
+  config="$activePath/config-premium.env"                 # config file for sandbox app
   . "$config"                                     # source config from fil
   keyId=$keyId                                    # map keyId from config
   httpHost=$baseURL                               # map host

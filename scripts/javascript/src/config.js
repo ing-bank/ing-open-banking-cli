@@ -7,7 +7,7 @@ const { read } = require('./io');
  */
 const getConfig = (root, psd2 = false) => {
   const { active } = parse(read(root, 'apps/active.env'));
-  return parse(read(root, `apps/${active}/config${psd2 ? '-psd2' : ''}.env`));
+  return parse(read(root, `apps/${active}/config${psd2 ? '-psd2' : '-premium'}.env`));
 };
 
 module.exports = { getConfig };
