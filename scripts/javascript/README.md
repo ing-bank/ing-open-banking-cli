@@ -10,7 +10,7 @@ Here you can find the node.js scripts to test your connection with the ING sandb
 
 * Change directory: `cd scripts/javascript`
 * Run `npm i` to install the runtime dependencies
-* Run `node call_open_banking.js` to test your connection to ING OAuth 2.0 API
+* Run `node call_premium.js` to test your connection to ING OAuth 2.0 API
 
 ## Caveats
 
