@@ -9,7 +9,7 @@ APIs.
 
 ## Quick Start (bash)
 * Change directory: `cd scripts/bash`
-* Run `./call_open_banking.sh` to test your connection to ING Open Banking APIs
+* Run `./call_premium.sh` to test your connection to ING Premium APIs
 * Run either `./call_psd2_auth_url.sh`  or `./call_psd2_account_info.sh`
   to test your connection to ING PSD2 APIs
 
@@ -19,10 +19,10 @@ individual steps necessary to connect to ING Open Banking APIs. They are built i
 a way that you can pipe the result from one script in to the next as shown by the quick
 start scripts. The steps are for:
 
-### Open Banking APIs (non-psd2):
-Configuration: `apps/sandbox/config.env`
-1. Request an application token: `./openBanking_01_RequestApplicationToken.sh`
-1. Call Payment Request API with the token: `./openBanking_02_CallPaymentRequestRegistration.sh`
+### Open Banking Premium APIs:
+Configuration: `apps/sandbox/config-premium.env`
+1. Request an application token: `./premium_01_RequestApplicationToken.sh`
+1. Call Payment Request API with the token: `./premium_02_CallPaymentRequestRegistration.sh`
 
 ### Open Banking PSD2 APIs:
 Configuration: `apps/sandbox/config-psd2.env`
