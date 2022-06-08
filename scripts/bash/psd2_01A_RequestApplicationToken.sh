@@ -19,7 +19,7 @@ outputFile=psd2_01A_RequestApplicationTokenResponse.json
   . "$config"                                                          # source config from fil
   keyId=$(echo "$keyId" | tr : =)                                      # map keyId from config and replace : by =
   httpHost=$baseURL                                                    # map host
-  signingCertificate=$(tr -d '\n' <$rootPath"$signingCertificateFile") # get signing certificate from file and strip all newline characters
+  signingCertificate=$(tr -d '\r\n' <$rootPath"$signingCertificateFile") # get signing certificate from file and strip all newline characters
   signingKeyPath=$rootPath$signingKeyFile                              # map signing private key file
   tlsCertificatePath=$rootPath$tlsCertificateFile                      # map tls certificate file
   tlsKeyPath=$rootPath$tlsKeyFile                                      # map tls private key file
