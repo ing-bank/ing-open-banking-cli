@@ -31,6 +31,7 @@ const proxy = false;
 const headers = {
   Accept: 'application/json',
   'Content-Type': 'application/json',
+  'User-Agent': 'openbanking-cli/1.0.0 javascript',
   Date: date,
 };
 

@@ -32,6 +32,7 @@ const headers = {
   'Content-Type': 'application/json',
   Digest: digest,
   Date: date,
+  'User-Agent': 'openbanking-cli/1.0.0 javascript',
 };
 
 const requestAuthUrl = (access_token, client_id) => {

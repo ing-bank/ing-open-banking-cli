@@ -55,6 +55,7 @@ curl -X GET "${httpHost}${reqPath}" \
   -H "Date: ${reqDate}" \
   -H "Authorization: Bearer ${accessToken}" \
   -H "Signature: keyId=\"$keyId\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"$signature\"" \
+  --user-agent "openbanking-cli/1.0.0 bash" \
   -d "" \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath" >$outputFile

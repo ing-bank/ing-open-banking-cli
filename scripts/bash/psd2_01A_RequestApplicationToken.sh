@@ -52,6 +52,7 @@ curl -X POST "${httpHost}${reqPath}" \
   -H "Date: ${reqDate}" \
   -H "TPP-Signature-Certificate: $signingCertificate" \
   -H "Authorization: Signature keyId=\"$keyId\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"$signature\"" \
+  --user-agent "openbanking-cli/1.0.0 bash" \
   -d "${payload}" \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath" >$outputFile

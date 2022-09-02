@@ -31,6 +31,7 @@ const headers = {
   'Content-Type': 'application/json',
   Digest: digest,
   Date: date,
+  'User-Agent': 'openbanking-cli/1.0.0 javascript',
 };
 
 const callAIA = (customer_token, client_id) => {

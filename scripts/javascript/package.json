@@ -1,6 +1,6 @@
 {
   "name": "ing-open-banking-cli",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Collection of scripts to test your connection to ING Open Banking APIs",
   "main": "index.js",
   "scripts": {

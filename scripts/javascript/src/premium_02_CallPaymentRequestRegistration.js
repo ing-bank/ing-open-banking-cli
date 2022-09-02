@@ -41,6 +41,7 @@ const headers = {
   'Content-Type': 'application/json',
   Digest: digest,
   Date: date,
+  'User-Agent': 'openbanking-cli/1.0.0 javascript',
   Signature: `keyId="${keyId}",algorithm="rsa-sha256",headers="(request-target) date digest",signature="${signature}"`,
 };
 

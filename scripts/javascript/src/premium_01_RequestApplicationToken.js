@@ -32,6 +32,7 @@ const headers = {
   'Content-Type': 'application/x-www-form-urlencoded',
   Digest: digest,
   Date: date,
+  'User-Agent': 'openbanking-cli/1.0.0 javascript',
   Authorization: authorization,
 };
 
