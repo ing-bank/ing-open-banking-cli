@@ -37,6 +37,7 @@ curl -X POST "${httpHost}${reqPath}" \
   -H "Accept: application/json" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -H "Date: ${reqDate}" \
+  --user-agent "openbanking-cli/1.0.0 bash" \
   -d "${payload}" \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath" >$outputFile
