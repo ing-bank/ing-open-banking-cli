@@ -3,7 +3,7 @@ Here you can find the bash scripts to test your connection with the ING sandbox 
 APIs.
 
 ## Dependencies:
-* bash
+* bash (Git Bash for Windows users)
 * curl
 * openssl
 
