@@ -1,3 +1,4 @@
 #!/bin/bash
 
-./premium_01_RequestApplicationToken.sh | ./extractToken.sh | ./premium_02_CallPaymentRequestRegistration.sh
+./call_premium_showcase.sh
+#./call_premium_payment_request_registration.sh

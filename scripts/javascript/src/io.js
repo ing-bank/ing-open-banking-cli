@@ -1,5 +1,5 @@
 const fs = require('fs');
-const https = require('https');
+const { Agent } = require('better-https-proxy-agent');
 const { join } = require('path');
 
 /**
@@ -21,7 +21,24 @@ const write = s => {
 const client = rootPath => (certificatePath, keyPath) => {
   const cert = read(rootPath, certificatePath);
   const key = read(rootPath, keyPath);
-  return new https.Agent({ cert, key });
+  const ca = read(rootPath, 'apps/sandbox/certificates/cafile.pem');
+
+  const httpsAgentOptions = {
+    rejectUnauthorized: false,
+    cert,
+    key,
+    ca,
+  };
+
+  const proxyRequestOptions = {
+    protocol: 'http:',
+    host: 'localhost',
+    port: 3128,
+    cert: read(rootPath, certificatePath),
+    key: read(rootPath, keyPath),
+    ca: read(rootPath, 'apps/sandbox/certificates/cafile.pem'),
+  };
+  return new Agent(httpsAgentOptions, proxyRequestOptions);
 };
 
 module.exports = {
