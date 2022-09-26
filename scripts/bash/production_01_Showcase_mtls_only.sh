@@ -33,7 +33,7 @@ digest: $digest"
 
 signature=$(echo -n "$signingString" | openssl dgst -sha256 -sign "$signingKeyPath" -passin "pass:changeit" | openssl base64 -A)
 
-curl -vvv -X GET "${httpHost}${reqPath}" \
+curl -X GET "${httpHost}${reqPath}" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
   -H "Digest: ${digest}" \
