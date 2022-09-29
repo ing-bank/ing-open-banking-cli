@@ -19,10 +19,12 @@ const sign = (signing, signKey) =>
  * @return {string}
  */
 const getFingerprint = signCert =>
-  Buffer.from(
-    new crypto.X509Certificate(signCert).fingerprint256.replace(/:/g, ''),
-    'hex',
-  ).toString('base64');
+  Buffer.from(new crypto.X509Certificate(signCert).fingerprint256.replace(/:/g, ''), 'hex')
+    .toString('base64')
+    .replace(/=/g, '')
+    .replace(/\n/g, '')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_');
 
 module.exports = {
   doDigest,

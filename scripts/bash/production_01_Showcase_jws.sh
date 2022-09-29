@@ -30,7 +30,7 @@ reqDate=$(LC_TIME=en_US.UTF-8 date -u "+%a, %d %b %Y %H:%M:%S GMT")
 # generate sigT date (REQUIREMENT-19)
 sigT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 
-base64Fingerprint=$(openssl x509 -noout -fingerprint -sha256 -inform pem -in $signingCertificatePath | cut -d'=' -f2 | sed s/://g  | xxd -r -p | base64)
+base64Fingerprint=$(openssl x509 -noout -fingerprint -sha256 -inform pem -in $signingCertificatePath | cut -d'=' -f2 | sed s/://g  | xxd -r -p | base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n')
 
 jwsHeader='{"b64":false,"x5t#S256":"'$base64Fingerprint'","crit":[ "sigT", "sigD", "b64"],"sigT":"'"$sigT"'","sigD":{ "pars":[ "(request-target)", "content-type",  "digest" ], "mId":"http://uri.etsi.org/19182/HttpHeaders"},"alg":"RS256"}'
 
