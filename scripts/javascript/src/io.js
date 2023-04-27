@@ -29,6 +29,7 @@ const client = rootPath => (certificatePath, keyPath) => {
   //   port: 3128
   // };
 
+  const proxy = null;
   if (proxy) {
     const httpsAgentOptions = {
       rejectUnauthorized: false,
