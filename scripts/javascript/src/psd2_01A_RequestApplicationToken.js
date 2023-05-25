@@ -14,8 +14,6 @@ const clientId = keyId.split(':').join('=');
 const signKey = read(join(root, signingKeyFile));
 const signingCertificate = read(join(root, signingCertificateFile)).split('\r\n').join('');
 
-console.log(signingCertificate);
-
 const url = '/oauth2/token';
 const method = 'post';
 
