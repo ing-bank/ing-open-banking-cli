@@ -9,6 +9,7 @@
   "license": "MIT",
   "dependencies": {
     "axios": "^1.6.8",
-    "dotenv": "^16.4.5"
+    "dotenv": "^16.4.5",
+    "rsa-key": "^0.0.6"
   }
 }

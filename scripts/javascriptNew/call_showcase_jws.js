@@ -8,5 +8,5 @@ const authenticator = new Authenticator(configuration)
 const showcaseClient = new ShowcaseClient(configuration)
 
 authenticator.requestMtlsAppToken()
-  .then(token => showcaseClient.callMtlsOnlyGreetings(token))
+  .then(token => showcaseClient.callJwsGreetings(token))
   .then(response => writeConsole(stringify(response)))
