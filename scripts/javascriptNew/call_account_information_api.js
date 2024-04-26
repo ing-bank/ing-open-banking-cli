@@ -1,10 +1,12 @@
 import { Authenticator } from './src/auth/Authenticator.js';
 import { Configuration } from './src/configuration/Configuration.js';
-import { writeConsole } from './src/util/util.js';
+import { stringify, writeConsole } from './src/util/util.js';
 import * as readline from 'node:readline';
+import { AccountInformationClient } from './src/clients/AccountInformationClient.js';
 
 const configuration = new Configuration('sandbox', true)
 const authenticator = new Authenticator(configuration)
+const accountInformationClient = new AccountInformationClient(configuration)
 
 const rl = readline.createInterface({
   input: process.stdin,
@@ -31,5 +33,8 @@ rl.question("Type authorization code: ", code => {
   rl.close()
 
   authenticator.requestCustomerToken(applicationAccessToken, clientId, authorizationCode)
-    .then(writeConsole)
+    .then(customerToken =>
+      accountInformationClient.callGetAccounts(customerToken, clientId)
+        .then(response => writeConsole(stringify(response)))
+    )
 })
