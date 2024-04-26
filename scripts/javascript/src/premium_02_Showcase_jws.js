@@ -39,7 +39,7 @@ const signing = `(request-target): get /signed/greetings\ncontent-type: applicat
 
 const jwsHeaderBase64URL = Buffer.from(JSON.stringify(jwsHeader))
   .toString('base64')
-  .replace(/\=+$/, '');
+  .replace(/=+$/, '');
 
 const jwsSignatureValue = sign(`${jwsHeaderBase64URL}.${signing}`, signKey).replace(/\=+$/, '');
 

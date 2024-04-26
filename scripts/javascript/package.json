@@ -11,13 +11,14 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
-    "better-https-proxy-agent": "^1.0.9"
+    "axios": "^1.6.8",
+    "better-https-proxy-agent": "^1.0.9",
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "husky": "^4.3.8",
-    "lint-staged": "^10.5.3",
-    "prettier": "^2.2.1"
+    "husky": "^9.0.11",
+    "lint-staged": "^15.2.2",
+    "prettier": "^3.2.5"
   },
   "prettier": {
     "printWidth": 100,
@@ -29,11 +30,6 @@
     "bracketSpacing": true,
     "jsxBracketSameLine": false,
     "arrowParens": "avoid"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
   },
   "lint-staged": {
     "*.js": [

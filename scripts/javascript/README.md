@@ -4,7 +4,7 @@ Here you can find the node.js scripts to test your connection with the ING sandb
 
 ## Dependencies:
 
-* node.js (tested on v10.23)
+* node.js (tested on v20.11.1)
 
 ## Quick Start (bash)
 

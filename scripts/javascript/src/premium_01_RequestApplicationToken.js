@@ -38,7 +38,10 @@ const headers = {
 
 const requestAppToken = () =>
   axios({ baseURL, url, method, data, headers, httpsAgent, proxy })
-    .then(getData)
+    .then(response => {
+      console.log(response)
+      return getData(response)
+    })
     .then(getToken)
     .catch(console.error);
 
