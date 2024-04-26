@@ -6,8 +6,8 @@
 # This script calls the endpoint "oauth2/authorization-server-url" to request     #
 # an authorization code for requesting customer access token. In this script      #
 # we pass "payment-account:balance:view" and "payment-accounts:transactions:view" #
-# scope tokens to consume AIS API. You must request an application access token   #
-# to run this script. Please update the variables "accessToken" and "certPath".   #
+# scope tokens to consume AIS API. The application access token is taken from     #
+# the previous step. Please update the variable "certPath".                       #
 ###################################################################################
 
 outputFile=psd2_02_RequestAuthorizationURLResponse.json
@@ -36,7 +36,7 @@ reqPath="/oauth2/authorization-server-url?scope=payment-accounts%3Abalances%3Avi
 digest="SHA-256=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
 
 # Generated value of the application access token. Please note that the access token expires in 15 minutes
-read -r accessToken
+accessToken=$(cat psd2_01_accesstoken.txt)
 
 reqDate=$(LC_TIME=en_US.UTF-8 date -u "+%a, %d %b %Y %H:%M:%S GMT")
 

@@ -1,15 +1,15 @@
 #!/bin/bash
 
 ###################################################################################
-#                             REQUEST CUSTOMER ACCESS TOKEN                       #
+#                             CALL AIS ACCOUNTS 					                        #
 ###################################################################################
-# This script requests customer access token based on authorization code using-   #
-# the endpoint "oauth2/token". You must request an application access token to 	  #
-# run this script. Please update the variables "accessToken", "certPath" and      #
-# "authorization_code"                                                            #
+# This script calls the AIS API in sandbox and performs a post request to the-    #
+# endpoint "v3/accounts" for account details. You must request customer access-   #
+# token to call this script.                                                      #
+# Please update the variables "accessToken" and "certPath".   					          #
 ###################################################################################
 
-outputFile=psd2_01B_RequestCustomerTokenResponse.json
+outputFile=psd2_05_CallAccountInformationApiAccountResponse.json
 
 # read from config and set variables
 # shellcheck disable=SC2154,SC1090
@@ -25,40 +25,38 @@ outputFile=psd2_01B_RequestCustomerTokenResponse.json
   tlsKeyPath=$rootPath$tlsKeyFile                 # map tls private key file
 }
 
-keyId="5ca1ab1e-c0ca-c01a-cafe-154deadbea75"              # client_id as provided in the documentation
-authorization_code="8b6cd77a-aa44-4527-ab08-a58d70cca286" # generated value of authorization code from the previous step.
-
-# Generated value of application access token. Please note that the access token expires in 15 minutes
-read -r accessToken
-
-# AUTHORIZATION CODE MUST BE PROVIDED AS A VALUE TO THE "code" PARAMETER IN THE PAYLOAD.
-payload="grant_type=authorization_code&code=$authorization_code"
-payloadDigest=$(echo -n "$payload" | openssl dgst -binary -sha256 | openssl base64)
-digest=SHA-256=$payloadDigest
-
-reqDate=$(LC_TIME=en_US.UTF-8 date -u "+%a, %d %b %Y %H:%M:%S GMT")
+keyId="5ca1ab1e-c0ca-c01a-cafe-154deadbea75" # client_id as provided in the documentation
 
 # httpMethod value must be in lower case
-httpMethod="post"
-reqPath="/oauth2/token"
+httpMethod="get"
+reqPath="/v3/accounts"
+
+# Digest value for an empty body
+digest="SHA-256=47DEQpj8HBSa+/TImW+5JCeuQeRkm5NMpJWZG3hSuFU="
+
+# Generated value of the customer access token. Please note that the customer access token expires in 15 minutes
+caccessToken=$(cat psd2_04_customer_access_token.txt)
+
+reqDate=$(LC_TIME=en_US.UTF-8 date -u "+%a, %d %b %Y %H:%M:%S GMT")
 
 # signingString must be declared exactly as shown below in separate lines
 signingString="(request-target): $httpMethod $reqPath
 date: $reqDate
 digest: $digest"
 
+# signingString must be declared exactly as shown below in separate lines
 signature=$(echo -n "$signingString" | openssl dgst -sha256 -sign "$signingKeyPath" | openssl base64 -A)
 
 # Curl request method must be in uppercase e.g "POST", "GET"
-curl -X POST "${httpHost}${reqPath}" \
+curl -X GET "${httpHost}$reqPath" \
   -H "Accept: application/json" \
-  -H "Content-Type: application/x-www-form-urlencoded" \
+  -H "Content-Type: application/json" \
   -H "Digest: ${digest}" \
   -H "Date: ${reqDate}" \
-  -H "Authorization: Bearer ${accessToken}" \
+  -H "Authorization: Bearer ${caccessToken}" \
   -H "Signature: keyId=\"$keyId\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"$signature\"" \
+  -H "X-Request-ID: 00000000-0000-0000-0000-0000000000" \
   --user-agent "openbanking-cli/1.0.0 bash" \
-  -d "${payload}" \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath" >$outputFile
 

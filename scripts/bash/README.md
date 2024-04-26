@@ -40,13 +40,12 @@ or
 
 ### Open Banking PSD2 APIs:
 Configuration: `apps/sandbox/config-psd2.env`
-1. Request an application token: `./psd2_01A_RequestApplicationToken.sh`
+1. Request an application token: `./psd2_01_RequestApplicationToken.sh`. 
+The above script outputs the access token value into a txt file which is then picked up automatically by the following scripts, 
+so there is no need to pass the application access token on each request
 2. Request an authorization URL: `./psd2_02_RequestAuthorizationURL.sh`
    (the authorization URL subsequently needs additional parameters according to
    [instructions](https://developer.ing.com/openbanking/get-started/psd2) on the ING Developer Portal)
-
-Then with an authorization code, and a (cached or new) application token, you can
-request a customer token:
-1. Request an application token: `./psd2_01A_RequestApplicationToken.sh`
-2. Request a customer token: `./psd2_01B_RequestCustomerToken.sh`
-3. Call the Account Information API: `./psd2_03_CallAccountInformationAccount.sh`
+3. Request authorisation code: `./psd2_03_RequestAuthorizationCode.sh`
+4. Request a customer access token: `./psd2_04_RequestCustomerToken.sh`
+5. Call the Account Information API: `./psd2_05_CallAccountInformationAccount.sh`
