@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ################################################################################
-#                             REQUEST APPLICATIION ACCESS TOKEN                #
+#                             REQUEST APPLICATION ACCESS TOKEN                 #
 ################################################################################
 # This script requests application access token for the PSD2 APIs in the ING's #
 # sandbox environment using example eIDAS certificates.                        #

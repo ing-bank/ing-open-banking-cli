@@ -22,21 +22,30 @@ start scripts. The steps are for:
 ### Open Banking Premium APIs:
 Configuration: `apps/sandbox/config-premium.env`
 1. Request an application token: `./premium_01_RequestApplicationToken.sh`
-1. Call Payment Request API with the token: `./premium_02_CallPaymentRequestRegistration.sh`
+2. Call the ShowCaseAPI with the token: `./premium_01_Showcase.sh`
+or
+2. Call Payment Request API with the token: `./premium_02_CallPaymentRequestRegistration.sh`
+or
+1. Run `./call_premium.sh` which calls both ShowCaseAPI and Payment Request API
 
 #### mTLS(Mutual TLS) Only
 Certain premium api's can be called using mTLS only, excluding the signature header.
 1. Request an application token `./premium_01_RequestApplicationToken_mtls_only.sh`
-2. Call the Showcase API `./production_01_Showcase_jws.sh`
+2. Call the Showcase API with the token `./premium_01_Showcase_mtls_only.sh`
 or
-1. Run `./call_premium_mtls_only.sh`
+2. Call the Payment Request API with the token `./premium_02_CallPaymentRequestRegistration_mtls_only.sh`
+or 
+1. Run `./call_premium_mtls_only.sh` which calls both ShowCaseAPI and Payment Request API
 
 #### JWS(JSON Web Signature)
-Certain premium api's can be called using JWS.
+Certain premium api's require a JWS message signature to ensure message integrity.
 1. Request an application token `./premium_01_RequestApplicationToken_mtls_only.sh`
-2. Call the Showcase API `./production_01_Showcase_mtls_only.sh`
+2. Call the Showcase API `./premium_01_Showcase_jws.sh`
 or
-1. Run `./call_production_jws.sh`
+1. Run `./call_premium_jws.sh`
+
+If you want to learn more about JWS message signing and/or signature verification for the signed responses by ING, please refer to the Getting Started Guide
+where the text of the Getting Started Guide links to https://developer.ing.com/openbanking/resources/get-started/premium#jws
 
 ### Open Banking PSD2 APIs:
 Configuration: `apps/sandbox/config-psd2.env`

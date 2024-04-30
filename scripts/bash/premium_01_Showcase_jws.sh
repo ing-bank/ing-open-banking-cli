@@ -1,6 +1,6 @@
 #!/bin/bash
 
-outputFile=production_01_Showcase.json
+outputFile=premium_01_Showcase.json
 
 # shellcheck disable=SC2154,SC1090
 {
@@ -51,7 +51,7 @@ jwsSignatureValue=$(printf %s "$inputForSignatureValueComputation"| openssl dgst
 
 jwsSignature=$jwsHeaderBase64URL..$jwsSignatureValue
 
-resp=$(curl -i -X GET "${httpHost}${reqPath}" \
+curl -i -X GET "${httpHost}${reqPath}" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -H "Digest: ${digest}" \
   -H "Authorization: Bearer ${accessToken}" \
@@ -59,7 +59,7 @@ resp=$(curl -i -X GET "${httpHost}${reqPath}" \
   --user-agent "openbanking-cli" \
   -d "${payload}" \
   --cert "$tlsCertificatePath" \
-  --key "$tlsKeyPath" >$outputFile)
+  --key "$tlsKeyPath">$outputFile
 
 echo -e "The response to your request is:"
 received_payload=$(cat $outputFile | awk '/^\r?$/{p=1; next} p')
