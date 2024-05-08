@@ -5,10 +5,10 @@ outputFile=premium_01_Showcase.json
 # shellcheck disable=SC2154,SC1090
 {
   rootPath="./../../"
-  . $rootPath"apps/active.env"
+  source $rootPath"apps/active.env"
   activePath=$rootPath"apps/$active"
   config="$activePath/config-premium.env"
-  . "$config"
+  source "$config"
   keyId=$keyId
   httpHost=$baseURL
   signingKeyPath=$rootPath$signingKeyFile
@@ -29,7 +29,7 @@ digest=SHA-256=$payloadDigest
 # generate sigT date (REQUIREMENT-19)
 sigT=`date -u +"%Y-%m-%dT%H:%M:%SZ"`
 
-base64Fingerprint=$(openssl x509 -noout -fingerprint -sha256 -inform pem -in $signingCertificatePath | cut -d'=' -f2 | sed s/://g  | xxd -r -p | base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n')
+base64Fingerprint=$(openssl x509 -noout -fingerprint -sha256 -inform pem -in "$signingCertificatePath"   | cut -d'=' -f2 | sed s/://g  | xxd -r -p | base64 | tr -d '=' | tr '/+' '_-' | tr -d '\n')
 
 jwsHeader='{"b64":false,"x5t#S256":"'$base64Fingerprint'","crit":[ "sigT", "sigD", "b64"],"sigT":"'"$sigT"'","sigD":{ "pars":[ "(request-target)", "content-type",  "digest" ], "mId":"http://uri.etsi.org/19182/HttpHeaders"},"alg":"PS256"}'
 
@@ -56,13 +56,12 @@ curl -i -X GET "${httpHost}${reqPath}" \
   -H "Digest: ${digest}" \
   -H "Authorization: Bearer ${accessToken}" \
   -H "X-JWS-Signature: ${jwsSignature}" \
-  --user-agent "openbanking-cli" \
   -d "${payload}" \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath">$outputFile
 
 echo -e "The response to your request is:"
-received_payload=$(cat $outputFile | awk '/^\r?$/{p=1; next} p')
+received_payload=$(cat $outputFile | awk '/^\r?$/{p=1; next} p' | sed 's/\r$//')
 echo $received_payload
 
 # Utility function for converting Base64URL to Base64.
@@ -73,10 +72,11 @@ base64url_to_base64() {
   input=$(echo "$input" | tr '_-' '/+')
 
   # Pad with = if needed
-  local mod=$(expr length "$input" % 4 )
-  if [ "$mod" -eq 2 ]; then
+  inputLength=${#input}
+  local mod=$((inputLength % 4))
+  if [[ "$mod" -eq 2 ]]; then
       input="${input}=="
-  elif [ "$mod" -eq 3 ]; then
+  elif [[ "$mod" -eq 3 ]]; then
       input="${input}="
   fi
   echo "$input"
@@ -86,7 +86,7 @@ echo "##########################################################################
 echo "# Validating JWS Signature and signing certificate trust chain..              #"
 echo "###############################################################################"
 
-received_digest=$(cat $outputFile | sed -n 's/digest: //p')
+received_digest=$(cat $outputFile | sed -n 's/digest: //p' | sed 's/\r$//')
 
 calculated_digest='SHA-256='$(echo -n "$received_payload" | openssl dgst -binary -sha256 | openssl base64)
 if [[ "$calculated_digest" == "$received_digest" ]]; then
