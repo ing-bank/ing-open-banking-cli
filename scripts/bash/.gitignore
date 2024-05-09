@@ -1,1 +1,8 @@
 *.json
+*.txt
+*.bin
+pubg3.cer
+rootg3.cer
+chain.pem
+public_key.pem
+received_certificate.pem

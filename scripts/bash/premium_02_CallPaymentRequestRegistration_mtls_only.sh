@@ -26,8 +26,6 @@ outputFile=premium_02_CallPaymentRequestRegistrationResponse__mtls_only.json
   tlsKeyPath=$rootPath$tlsKeyFile                 # map tls private key file
 }
 
-# httpMethod value must be in lower code
-httpMethod="post"
 reqPath="/payment-requests/registrations"
 
 # Generated value of application access token from the previous step. Please note that the access token expires in 15 minutes

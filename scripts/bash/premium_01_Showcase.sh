@@ -1,17 +1,6 @@
 #!/bin/bash
 
-###############################################################################
-#                   CALL PAYMENT REQUEST AND REGISTER A MERCHANT              #
-###############################################################################
-# This script calls the payment request API in ING's sandbox environment and- #
-# -submits a post request to the endpoint "payment-requests/registrations".   #
-# You must request an application access token to run this script.            #
-# Please update the variables "accessToken", "certPath". You can find the-    #
-# other endpoints to test in the sandbox under "sandbox" section of the API-  #
-# documentation                                                               #
-###############################################################################
-
-outputFile=sandbox_01_Showcase.json
+outputFile=premium_01_Showcase.json
 
 # read from config and set variables
 # shellcheck disable=SC2154,SC1090

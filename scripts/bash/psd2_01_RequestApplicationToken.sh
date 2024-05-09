@@ -1,13 +1,13 @@
 #!/bin/bash
 
 ################################################################################
-#                             REQUEST APPLICATIION ACCESS TOKEN                #
+#                             REQUEST APPLICATION ACCESS TOKEN                 #
 ################################################################################
 # This script requests application access token for the PSD2 APIs in the ING's #
 # sandbox environment using example eIDAS certificates.                        #
 ################################################################################
 
-outputFile=psd2_01A_RequestApplicationTokenResponse.json
+outputFile=psd2_01_accesstoken.txt
 
 # read from config and set variables
 # shellcheck disable=SC2154,SC1090
@@ -45,7 +45,7 @@ digest: $digest"
 signature=$(echo -n "$signingString" | openssl dgst -sha256 -sign "$signingKeyPath" -passin "pass:changeit" | openssl base64 -A)
 
 # Curl request method must be in uppercase e.g "POST", "GET"
-curl -X POST "${httpHost}${reqPath}" \
+response=$(curl -X POST "${httpHost}${reqPath}" \
   -H "Accept: application/json" \
   -H "Content-Type: application/x-www-form-urlencoded" \
   -H "Digest: ${digest}" \
@@ -55,6 +55,8 @@ curl -X POST "${httpHost}${reqPath}" \
   --user-agent "openbanking-cli/1.0.0 bash" \
   -d "${payload}" \
   --cert "$tlsCertificatePath" \
-  --key "$tlsKeyPath" >$outputFile
+  --key "$tlsKeyPath")
 
-cat $outputFile
+echo $response
+export access_token=`echo $response | jq -r '.access_token'`
+echo $access_token>$outputFile

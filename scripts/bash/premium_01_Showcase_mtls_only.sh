@@ -1,6 +1,6 @@
 #!/bin/bash
 
-outputFile=production_01_Showcase.json
+outputFile=premium_01_Showcase_mtls_only.json
 
 # shellcheck disable=SC2154,SC1090
 {
@@ -11,13 +11,11 @@ outputFile=production_01_Showcase.json
   . "$config"
   keyId=$keyId
   httpHost=$baseURL
-  signingKeyPath=$rootPath$signingKeyFile
   tlsCertificatePath=$rootPath$tlsCertificateFile
   tlsKeyPath=$rootPath$tlsKeyFile
 }
 
-httpMethod="get"
-reqPath="/greetings/single"
+reqPath="/mtls-only/greetings"
 
 read -r accessToken
 
@@ -27,20 +25,13 @@ digest=SHA-256=$payloadDigest
 
 reqDate=$(LC_TIME=en_US.UTF-8 date -u "+%a, %d %b %Y %H:%M:%S GMT")
 
-signingString="(request-target): $httpMethod $reqPath
-date: $reqDate
-digest: $digest"
-
-signature=$(echo -n "$signingString" | openssl dgst -sha256 -sign "$signingKeyPath" -passin "pass:changeit" | openssl base64 -A)
-
 curl -X GET "${httpHost}${reqPath}" \
   -H "Accept: application/json" \
   -H "Content-Type: application/json" \
   -H "Digest: ${digest}" \
   -H "Date: ${reqDate}" \
   -H "Authorization: Bearer ${accessToken}" \
-  -H "Signature: keyId=\"$keyId\",algorithm=\"rsa-sha256\",headers=\"(request-target) date digest\",signature=\"$signature\"" \
-  --user-agent "openbanking-cli/1.0.0 bash" \
+  --user-agent "openbanking-cli" \
   -d "${payload}" \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath" >$outputFile
