@@ -69,7 +69,7 @@ base64url_to_base64() {
   # read from stdin
   local input;  read -r input;
   # Replace URL-safe characters
-  input=$(echo "$input" | tr '_-' '/+')
+  input=$(echo "$input" | tr '_-' '/+' | sed 's/,/\n/g' | sed 's/\r//')
 
   # Pad with = if needed
   inputLength=${#input}
@@ -115,12 +115,16 @@ if [[ "$pars" != '["content-type","digest"]' ]]; then
 fi
 
 #construct the http headers part
-httpHeaders="content-type: $(cat "$outputFile" | sed -n 's/Content-Type: //p')
-digest: $(cat "$outputFile" | sed -n 's/digest: //p')"
+#Note: for compatibility between operating systems, the headers are constructed into a file
+httpHeaders="content-type: $(cat "$outputFile" | sed -n 's/Content-Type: //p'),digest: $(cat "$outputFile" | sed -n 's/digest: //p')"
+echo -n "$httpHeaders" | sed 's/,/\n/g' | sed 's/\r//' > httpHeaders.txt
 
 # Step 5: Recreate input for Signature Value
 #Description: Combine Base64url encoded JWS Protected Header with HTTP Header to be signed ready
-input_for_signature_verification=$jws_protected_header.$httpHeaders
+input_for_signature_verification=$jws_protected_header.$(cat httpHeaders.txt)
+
+# needed by OpenSSL - write input (for signature verification) to a file; has to be already sha-256, as this is the way openssl expects it
+echo -n "$input_for_signature_verification" | openssl dgst -binary -sha256 > input_for_signature_verification.bin
 
 # Step 6: Cryptographically Validate Signature Value
 #Description: Extract JWS signature value from x-jws-signature after "'.." and validated against recreated
@@ -134,9 +138,6 @@ public_key=$(echo -e "$received_certificate_pem" | openssl x509 -pubkey -noout)
 echo -n "$public_key" > public_key.pem
 # needed by OpenSSL - write signature to file
 echo -n "$jws_signature" | cut -d'.' -f3 | base64url_to_base64 | base64 -d > jws_signature.bin
-
-# needed by OpenSSL - write input (for signature verification) to a file; has to be already sha-256, as this is the way openssl expects it
-echo -n "$input_for_signature_verification" | openssl dgst -binary -sha256 > input_for_signature_verification.bin
 
 # actual verification of the signature
 signature_verification_result=$(openssl pkeyutl -verify -pubin -inkey public_key.pem \
