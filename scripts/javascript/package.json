@@ -1,43 +1,15 @@
 {
-  "name": "ing-open-banking-cli",
+  "name": "ing-open-banking-cli-js",
   "version": "1.0.0",
-  "description": "Collection of scripts to test your connection to ING Open Banking APIs",
+  "description": "",
   "main": "index.js",
-  "scripts": {
-    "format": "prettier \"**/*.js\" --write",
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "type": "module",
+  "scripts": {},
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "axios": "^0.21.1",
-    "better-https-proxy-agent": "^1.0.9"
-  },
-  "devDependencies": {
-    "husky": "^4.3.8",
-    "lint-staged": "^10.5.3",
-    "prettier": "^2.2.1"
-  },
-  "prettier": {
-    "printWidth": 100,
-    "tabWidth": 2,
-    "useTabs": false,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "all",
-    "bracketSpacing": true,
-    "jsxBracketSameLine": false,
-    "arrowParens": "avoid"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "lint-staged"
-    }
-  },
-  "lint-staged": {
-    "*.js": [
-      "npm run format"
-    ]
+    "axios": "^1.6.8",
+    "dotenv": "^16.4.5",
+    "rsa-key": "^0.0.6"
   }
 }
