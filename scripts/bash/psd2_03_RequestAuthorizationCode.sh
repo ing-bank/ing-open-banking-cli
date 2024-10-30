@@ -78,7 +78,7 @@ grantsSupportResponse=$(curl -k -X POST "${myAccountHost}/grantssupport/$referen
 
 echo -e "\n"
 echo "GrantsSupportResponse: "
-echo $grantsSupportResponse
+echo "$grantsSupportResponse"
 echo -e "\n"
 
 cleaned_grantsSupportResponse=${grantsSupportResponse:6}
@@ -86,4 +86,4 @@ cleaned_grantsSupportResponse=${grantsSupportResponse:6}
 # get the authorization code from GrantsSupportResponse
 authorization_code=$(echo "$cleaned_grantsSupportResponse" | jq -r '.location | split("=") | map(select(length > 0)) | .[-1]')
 
-echo $authorization_code > psd2_03_RequestAuthorizationCode.txt
+echo "$authorization_code" > psd2_03_RequestAuthorizationCode.txt
