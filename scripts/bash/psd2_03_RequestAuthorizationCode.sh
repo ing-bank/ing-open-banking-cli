@@ -42,7 +42,7 @@ accountsResponse=$(curl -k -X GET "${myAccountHost}/grantssupport/accounts" \
 -H "Authorization: Bearer ${accessToken}" )
 
 echo "Accounts response:"
-echo $accountsResponse
+echo "$accountsResponse"
 echo -e "\n"
 
 echo '###################################################################################
@@ -60,8 +60,6 @@ echo '##########################################################################
 extractedId=$(echo "$selected_profile" | jq -r '.id')
 extractedScopes=$(echo "$selected_profile" | jq -r '.scopes | join(" ")')
 
-echo $tlsCertificatePath
-
 grantsSupportResponse=$(curl -k -X POST "${myAccountHost}/grantssupport/$referenceId/auth-code" \
 -H "host: api.myaccount.sandbox.ing.com" \
 -H "Authorization: Bearer ${accessToken}" \
@@ -69,18 +67,18 @@ grantsSupportResponse=$(curl -k -X POST "${myAccountHost}/grantssupport/$referen
 -H 'X-XSRF-Token: t7oVFHD1d4MKlzKqbqME1QrYGrdWdPtkbPoFBngMR5xlWEYaJPLk-BVvE8Up1CKV' \
 -H 'Cookie: XSRF-TOKEN=t7oVFHD1d4MKlzKqbqME1QrYGrdWdPtkbPoFBngMR5xlWEYaJPLk-BVvE8Up1CKV' \
 -d '{
-	"id":"'"$extractedId"'",
+	  "id":"'"$extractedId"'",
     "client_id":"5ca1ab1e-c0ca-c01a-cafe-154deadbea75",
     "scopes":"'"$extractedScopes"'",
     "state":"ANY_ARBITRARY_VALUE",
-    "redirectURL":"https://example.com"
+    "redirectURL":"https://www.example.com"
 }' \
   --cert "$tlsCertificatePath" \
   --key "$tlsKeyPath")
 
 echo -e "\n"
 echo "GrantsSupportResponse: "
-echo $grantsSupportResponse
+echo "$grantsSupportResponse"
 echo -e "\n"
 
 cleaned_grantsSupportResponse=${grantsSupportResponse:6}
@@ -88,4 +86,4 @@ cleaned_grantsSupportResponse=${grantsSupportResponse:6}
 # get the authorization code from GrantsSupportResponse
 authorization_code=$(echo "$cleaned_grantsSupportResponse" | jq -r '.location | split("=") | map(select(length > 0)) | .[-1]')
 
-echo $authorization_code > psd2_03_RequestAuthorizationCode.txt
+echo "$authorization_code" > psd2_03_RequestAuthorizationCode.txt
