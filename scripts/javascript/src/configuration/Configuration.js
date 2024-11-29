@@ -15,7 +15,8 @@ export class Configuration {
     const parsedConfiguration = configDotenv({
       path: `${path.join(import.meta.dirname, '../../../../')}apps/${this.appDir}/config-${this.isPSD2 ? 'psd2' : 'premium'}.env`
     }).parsed;
-    this.baseURL = parsedConfiguration.baseURL
+    this.baseURL = parsedConfiguration.baseURL;
+    this.authorizationBaseURL = parsedConfiguration.authorizationBaseURL;
     this.keyId = parsedConfiguration.keyId;
     this.tlsCertificateFile = parsedConfiguration.tlsCertificateFile;
     this.tlsKeyFile = parsedConfiguration.tlsKeyFile;

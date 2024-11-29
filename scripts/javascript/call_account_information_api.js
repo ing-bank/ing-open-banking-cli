@@ -22,7 +22,7 @@ await authenticator.requestAppToken()
   {
     applicationAccessToken = response.access_token
     clientId = response.client_id
-    return authenticator.requestAuthorizationUrl(response.access_token, response.client_id)
+    return authenticator.requestAuthorizationUrl(response.client_id)
   }
   )
   .then(location => writeConsole(`Authorization URL: ${location}`))

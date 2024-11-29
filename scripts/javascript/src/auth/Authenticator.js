@@ -103,35 +103,14 @@ export class Authenticator {
   }
 
   /**
-   * @param accessToken {string}
    * @param clientId {string}
-   * @returns {Promise<string>}
+   * @returns {string}
    */
-  async requestAuthorizationUrl(accessToken, clientId) {
+  requestAuthorizationUrl(clientId) {
     const redirectUri = "https://www.example.com"
     const scope = "payment-accounts%3Abalances%3Aview%20payment-accounts%3Atransactions%3Aview"
-    const url = `/oauth2/authorization-server-url?scope=${scope}&redirect_uri=${redirectUri}&country_code=NL`
-    const method = 'get'
-    const date = new Date().toUTCString();
-    const digestString = digest('sha256', '')
-
-    const signingKey = readFile(path.join(this.rootDir, this.configuration.signingKeyFile));
-    const signature = signCavage(method, url, date, digestString, signingKey);
-
-    const headers = new AxiosHeaders({
-      'Accept': 'application/json',
-      'Content-Type': 'application/json',
-      'Digest': digestString,
-      'Date': date,
-      'User-Agent': 'open-banking-cli/1.0.0 javascript',
-      'Authorization': `Bearer ${accessToken}`,
-      'Signature': `keyId="${clientId}",algorithm="rsa-sha256",headers="(request-target) date digest",signature="${signature}"`
-    })
-
-    return this.axios.get(url, {headers})
-      .then(response =>
-        response.data.location + `?client_id=${clientId}&redirect_uri=${redirectUri}&scope=${scope}&state=some-state&response_type=code`)
-      .catch(console.error)
+    const state = "MY_STATE"
+    return `${this.configuration.authorizationBaseURL}/authorize/v2/NL?client_id=${clientId}&scope=${scope}&state=${state}&redirect_uri=${redirectUri}&response_type=code`
   }
 
   /**
