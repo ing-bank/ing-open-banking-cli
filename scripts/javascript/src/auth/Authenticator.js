@@ -106,7 +106,7 @@ export class Authenticator {
    * @param clientId {string}
    * @returns {string}
    */
-  requestAuthorizationUrl(clientId) {
+  generateAuthorizationUrl(clientId) {
     const redirectUri = "https://www.example.com"
     const scope = "payment-accounts%3Abalances%3Aview%20payment-accounts%3Atransactions%3Aview"
     const state = "MY_STATE"
