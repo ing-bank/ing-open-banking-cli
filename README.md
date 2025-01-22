@@ -18,3 +18,6 @@ create wonderful apps using ING APIs!
 
 We are also providing an SDK for frictionless calls to Open Banking APIs. The SDK provides drivers that can be used
 directly in your applications to connect to ING. Find all the details [here](https://github.com/ing-bank/ing-open-banking-sdk).
+
+adrianasamusic@gmail.com
+https://github.com/ing-bank/ing-open-banking-cli/edit/master/README.md
