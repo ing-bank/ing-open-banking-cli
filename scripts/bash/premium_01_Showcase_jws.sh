@@ -156,21 +156,27 @@ fi
 #Description: This step is doing the trust chain validation, where we certify that the received certificate is signed by a known CA.
 
 #download root CA
-if test -f rootg3.cer; then
-  echo "INFO: rootg3.cer already exists and will not be downloaded again."
+if test -f rootg4.cer; then
+  echo "INFO: rootg4.cer already exists and will not be downloaded again."
 else
-  curl https://pki.ing.com/file_db/rootg3.cer --output rootg3.cer
+  curl https://pki.ing.net/g4/binary_certificates/g4_c2r_bin.cer --output rootg4.cer
 fi
 
-if test -f pubg3.cer; then
-  echo "INFO: pubg3.cer already exists and will not be downloaded again."
+if test -f cag4.cer; then
+  echo "INFO: cag4.cer already exists and will not be downloaded again."
 else
-  curl https://pki.ing.com/file_db/pubg3.cer --output pubg3.cer
+  curl https://pki.ing.net/g4/binary_certificates/g4_c2r_ca02_bin.cer --output cag4.cer
 fi
 
-# Convert rootg3.cer and pubg3.cer to PEM (they were in DER format initially), then concatenate into the chain file,
+if test -f customerg4.cer; then
+  echo "INFO: customerg4.cer already exists and will not be downloaded again."
+else
+  curl https://pki.ing.net/g4/binary_certificates/g4_c2r_ca02_cus_bin.cer --output customerg4.cer
+fi
+
+# Convert rootg4.cer, cag4.cer and customerg4.cer to PEM (they were in DER format initially), then concatenate into the chain file,
 # to be able to provide it as argument for "openssl verify -CAfile" command.
-{ openssl x509 -inform der -in rootg3.cer && openssl x509 -inform der -in pubg3.cer; } > chain.pem
+{ openssl x509 -inform der -in rootg4.cer && openssl x509 -inform der -in cag4.cer && openssl x509 -inform der -in customerg4.cer; } > chain.pem
 
 # writing the received x5c to a file so that openssl can verify it.
 echo -e "$received_certificate_pem" > received_certificate.pem
