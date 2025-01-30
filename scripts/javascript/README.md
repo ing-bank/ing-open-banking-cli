@@ -14,14 +14,16 @@ Here you can find the node.js scripts to test your connection with the ING sandb
 
 ## Other scripts
 
-- For connecting to Showcase API we provide three scripts:
-  - `call_showcase_single` which uses the old Cavage signature
-  - `call_showcase_mtls` which uses mutual TLS authentication
-  - `call_showcase_jws` which uses the new JWS signature when making the request
-- `call_payment_registration` which registers a new merchant for Payment Request Registration API, another premium API from ING
-- `call_account_information_api` which goes through the flow of retrieving account data for a customer. This is a PSD2 API.
+* For connecting to Showcase API we provide three scripts:
+  * `call_showcase_single` which uses the old Cavage signature
+  * `call_showcase_mtls` which uses mutual TLS authentication
+  * `call_showcase_jws` which uses the new JWS signature when making the request
 
-## Configuration:
+* `call_payment_registration` which registers a new merchant for Payment Request Registration API, another premium API from ING
+
+* `call_account_information_api` which goes through the flow of retrieving account data for a customer. This is a PSD2 API.
+
+## Configuration
 
 Inside the `apps/` directory you create your own configuration and use your own certificates.
 Use the configuration files provided in the `apps/sandbox/` directory as an example, all parameters are mandatory.
