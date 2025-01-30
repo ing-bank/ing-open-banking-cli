@@ -2,17 +2,17 @@
 
 Here you can find the node.js scripts to test your connection with the ING sandbox for Open Banking APIs.
 
-## Dependencies:
+## Dependencies
 
 * node.js (tested on v20.11.1)
 
-## Quick Start (bash):
+## Quick Start (bash)
 
 * Change directory: `cd scripts/javascript`
 * Run `npm i` to install the runtime dependencies
 * Run `node call_showcase_single.js` to test your connection to ING OAuth 2.0 API
 
-## Other scripts:
+## Other scripts
 
 - For connecting to Showcase API we provide three scripts:
   - `call_showcase_single` which uses the old Cavage signature
